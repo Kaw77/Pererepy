@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PERERE.py — Perguntar e Responder Ponto Py</title>
+<meta name="description" content="PERERE.py — Perguntar e Responder Ponto Py: jogo educacional de programação com lacunas, combinações, shorts e fórum.">
+<link rel="icon" type="image/png" href="images/logo.png">
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&family=Fira+Code:wght@400;500;600&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ===================== TELA: SPLASH / LOGIN DE PERFIL (perfil.py) ===================== -->
+<section id="tela-perfil" class="tela tela-ativa">
+  <div class="perfil-container">
+    <div class="perfil-logo-wrap">
+      <img src="images/logo.png" alt="Logo PERERE.py" class="perfil-logo">
+      <h1 class="perfil-app-nome">PERERE<span>.py</span></h1>
+      <p class="perfil-subtitulo">Perguntar e Responder Ponto Py — aprenda programação jogando: lacunas, combinações, shorts e fórum!</p>
+    </div>
+
+    <form id="form-perfil" class="perfil-form" autocomplete="off">
+      <div class="perfil-avatar-escolha">
+        <img id="preview-avatar" src="images/avatar-padrao.png" alt="Prévia do avatar escolhido" class="perfil-avatar-preview">
+        <label class="btn-secundario btn-upload">
+          <i class="fa-solid fa-camera"></i> Escolher foto
+          <input type="file" id="input-avatar" accept="image/*" hidden>
+        </label>
+      </div>
+
+      <label for="input-nome" class="perfil-label">Seu nome de jogador</label>
+      <input type="text" id="input-nome" class="perfil-input" placeholder="Ex: Ana_Coder" maxlength="24" required>
+
+      <fieldset class="perfil-fieldset">
+        <legend><i class="fa-solid fa-palette"></i> Cor principal</legend>
+        <div id="cores-primarias" class="opcoes-cor">
+          <button type="button" class="cor-opcao" style="--cor:#7c3aed" data-cor="#7c3aed" aria-label="Roxo"></button>
+          <button type="button" class="cor-opcao" style="--cor:#2563eb" data-cor="#2563eb" aria-label="Azul"></button>
+          <button type="button" class="cor-opcao" style="--cor:#059669" data-cor="#059669" aria-label="Verde"></button>
+          <button type="button" class="cor-opcao" style="--cor:#dc2626" data-cor="#dc2626" aria-label="Vermelho"></button>
+          <button type="button" class="cor-opcao" style="--cor:#ea580c" data-cor="#ea580c" aria-label="Laranja"></button>
+          <button type="button" class="cor-opcao" style="--cor:#db2777" data-cor="#db2777" aria-label="Rosa"></button>
+        </div>
+      </fieldset>
+
+      <fieldset class="perfil-fieldset">
+        <legend><i class="fa-solid fa-fill-drip"></i> Fundo do app</legend>
+        <div id="cores-fundo" class="opcoes-cor">
+          <button type="button" class="cor-opcao" style="--cor:#0f172a" data-fundo="#0f172a" aria-label="Escuro"></button>
+          <button type="button" class="cor-opcao" style="--cor:#f8fafc" data-fundo="#f8fafc" aria-label="Claro"></button>
+          <button type="button" class="cor-opcao" style="--cor:#1e1b4b" data-fundo="#1e1b4b" aria-label="Índigo escuro"></button>
+          <button type="button" class="cor-opcao" style="--cor:#f0fdf4" data-fundo="#f0fdf4" aria-label="Verde claro"></button>
+          <button type="button" class="cor-opcao cor-imagem" data-fundo="imagem" aria-label="Imagem de fundo" style="background-image:url('images/fundo.png')"></button>
+        </div>
+      </fieldset>
+
+      <fieldset class="perfil-fieldset">
+        <legend><i class="fa-solid fa-font"></i> Fonte</legend>
+        <div id="fontes" class="opcoes-fonte">
+          <button type="button" class="fonte-opcao" data-fonte="'Inter', sans-serif" style="font-family:'Inter',sans-serif">Inter</button>
+          <button type="button" class="fonte-opcao" data-fonte="'Poppins', sans-serif" style="font-family:'Poppins',sans-serif">Poppins</button>
+          <button type="button" class="fonte-opcao" data-fonte="'Fira Code', monospace" style="font-family:'Fira Code',monospace">Fira Code</button>
+          <button type="button" class="fonte-opcao" data-fonte="'Comic Neue', cursive" style="font-family:'Comic Neue',cursive">Comic Neue</button>
+        </div>
+      </fieldset>
+
+      <button type="submit" class="btn-primario btn-entrar">
+        <i class="fa-solid fa-rocket"></i> Entrar no jogo
+      </button>
+    </form>
+  </div>
+</section>
+
+<!-- ===================== TELA: MENU PRINCIPAL (main.py) ===================== -->
+<section id="tela-menu" class="tela">
+  <header class="topo-app" id="topo-menu">
+    <div class="topo-usuario">
+      <img id="menu-avatar" src="images/avatar-padrao.png" alt="Avatar do usuário" class="topo-avatar">
+      <div>
+        <p class="topo-saudacao">Olá, <span id="menu-nome-usuario">Jogador</span>!</p>
+        <p class="topo-pontos"><i class="fa-solid fa-star"></i> <span id="menu-pontos-total">0</span> pts</p>
+      </div>
+    </div>
+    <div class="topo-acoes">
+      <button id="btn-editar-perfil" class="btn-icone" title="Editar perfil" aria-label="Editar perfil"><i class="fa-solid fa-user-pen"></i></button>
+      <button id="btn-sair" class="btn-icone btn-sair" title="Sair" aria-label="Sair do jogo"><i class="fa-solid fa-right-from-bracket"></i></button>
+    </div>
+  </header>
+
+  <main class="menu-conteudo">
+    <h2 class="menu-titulo">Menu Principal</h2>
+
+    <nav class="menu-cards" aria-label="Navegação principal">
+      <button class="menu-card" data-destino="conteudo">
+        <i class="fa-solid fa-book-open menu-card-icone"></i>
+        <span class="menu-card-titulo">Conteúdo</span>
+        <span class="menu-card-desc">Leia posts, resolva lacunas e combinações</span>
+      </button>
+      <button class="menu-card" data-destino="shorts">
+        <i class="fa-solid fa-mobile-screen menu-card-icone"></i>
+        <span class="menu-card-titulo">Shorts</span>
+        <span class="menu-card-desc">Vídeos curtos com perguntas rápidas</span>
+      </button>
+      <button class="menu-card" data-destino="forum">
+        <i class="fa-solid fa-comments menu-card-icone"></i>
+        <span class="menu-card-titulo">Tutoriais & Dúvidas</span>
+        <span class="menu-card-desc">Comente e responda no fórum</span>
+      </button>
+      <button class="menu-card" data-destino="pontuacao">
+        <i class="fa-solid fa-medal menu-card-icone"></i>
+        <span class="menu-card-titulo">Minha Pontuação</span>
+        <span class="menu-card-desc">Veja seu progresso e aprovação</span>
+      </button>
+    </nav>
+
+    <section class="menu-estatisticas" aria-labelledby="titulo-estatisticas">
+      <h3 id="titulo-estatisticas"><i class="fa-solid fa-chart-simple"></i> Estatísticas do Jogo</h3>
+      <div class="estatisticas-grid">
+        <article class="estatistica-card">
+          <i class="fa-solid fa-users"></i>
+          <p class="estatistica-numero" id="stat-visitantes">0</p>
+          <p class="estatistica-label">Visitantes</p>
+        </article>
+        <article class="estatistica-card">
+          <i class="fa-solid fa-heart"></i>
+          <p class="estatistica-numero" id="stat-total-curtidas">0</p>
+          <p class="estatistica-label">Curtidas totais</p>
+        </article>
+        <article class="estatistica-card">
+          <i class="fa-solid fa-message"></i>
+          <p class="estatistica-numero" id="stat-comentarios">0</p>
+          <p class="estatistica-label">Comentários no fórum</p>
+        </article>
+      </div>
+
+      <div class="estatisticas-ranking">
+        <div class="ranking-bloco">
+          <h4><i class="fa-solid fa-newspaper"></i> Posts mais curtidos</h4>
+          <ol id="ranking-posts" class="ranking-lista"></ol>
+        </div>
+        <div class="ranking-bloco">
+          <h4><i class="fa-solid fa-film"></i> Shorts mais curtidos</h4>
+          <ol id="ranking-shorts" class="ranking-lista"></ol>
+        </div>
+      </div>
+
+      <div class="estatisticas-grafico-wrap">
+        <canvas id="grafico-visitas" style="height:260px;"></canvas>
+      </div>
+    </section>
+  </main>
+</section>
+
+<!-- ===================== TELA: CONTEÚDO (conteudo.py) ===================== -->
+<section id="tela-conteudo" class="tela">
+  <header class="topo-app">
+    <button class="btn-icone btn-voltar" data-voltar="menu" aria-label="Voltar ao menu"><i class="fa-solid fa-arrow-left"></i></button>
+    <h2 class="topo-titulo-pagina"><i class="fa-solid fa-book-open"></i> Conteúdo</h2>
+    <div class="topo-widgets">
+      <div class="widget-relogio" id="widget-relogio" title="Hora atual">
+        <i class="fa-regular fa-clock"></i> <span id="relogio-hora">00:00:00</span>
+      </div>
+      <button class="btn-icone" id="btn-abrir-calendario" title="Calendário" aria-label="Abrir calendário"><i class="fa-regular fa-calendar"></i></button>
+    </div>
+  </header>
+
+  <div id="painel-calendario" class="painel-calendario oculto">
+    <div class="calendario-cabecalho">
+      <button id="cal-mes-anterior" class="btn-icone" aria-label="Mês anterior"><i class="fa-solid fa-chevron-left"></i></button>
+      <span id="cal-mes-ano"></span>
+      <button id="cal-mes-seguinte" class="btn-icone" aria-label="Mês seguinte"><i class="fa-solid fa-chevron-right"></i></button>
+    </div>
+    <div class="calendario-dias-semana">
+      <span>D</span><span>S</span><span>T</span><span>Q</span><span>Q</span><span>S</span><span>S</span>
+    </div>
+    <div id="cal-grade" class="calendario-grade"></div>
+  </div>
+
+  <main class="conteudo-feed" id="conteudo-feed">
+    <!-- posts inseridos via JS -->
+  </main>
+</section>
+
+<!-- ===================== TELA: LEITURA DE POST + QUIZ ===================== -->
+<section id="tela-post" class="tela">
+  <header class="topo-app">
+    <button class="btn-icone btn-voltar" data-voltar="conteudo" aria-label="Voltar ao conteúdo"><i class="fa-solid fa-arrow-left"></i></button>
+    <h2 class="topo-titulo-pagina" id="post-categoria-topo">Post</h2>
+  </header>
+  <main class="post-leitura" id="post-leitura-container">
+    <!-- post completo + quiz inseridos via JS -->
+  </main>
+</section>
+
+<!-- ===================== TELA: SHORTS (shorts.py) ===================== -->
+<section id="tela-shorts" class="tela">
+  <header class="topo-app topo-app-transparente">
+    <button class="btn-icone btn-voltar" data-voltar="menu" aria-label="Voltar ao menu"><i class="fa-solid fa-arrow-left"></i></button>
+    <h2 class="topo-titulo-pagina"><i class="fa-solid fa-mobile-screen"></i> Shorts</h2>
+    <div class="widget-tempo-shorts" id="widget-tempo-shorts" title="Tempo assistido nesta sessão">
+      <i class="fa-solid fa-hourglass-half"></i> <span id="tempo-shorts-valor">00:00</span>
+    </div>
+  </header>
+  <main class="shorts-feed" id="shorts-feed">
+    <!-- shorts inseridos via JS -->
+  </main>
+</section>
+
+<!-- ===================== TELA: FÓRUM / TUTORIAIS E DÚVIDAS (tutorias_duvidas.py) ===================== -->
+<section id="tela-forum" class="tela">
+  <header class="topo-app">
+    <button class="btn-icone btn-voltar" data-voltar="menu" aria-label="Voltar ao menu"><i class="fa-solid fa-arrow-left"></i></button>
+    <h2 class="topo-titulo-pagina"><i class="fa-solid fa-comments"></i> Tutoriais & Dúvidas</h2>
+  </header>
+
+  <main class="forum-container">
+    <form id="form-novo-topico" class="forum-novo-topico">
+      <h3><i class="fa-solid fa-circle-question"></i> Envie sua dúvida</h3>
+      <input type="text" id="input-topico-titulo" class="perfil-input" placeholder="Título da sua dúvida" required maxlength="80">
+      <textarea id="input-topico-texto" class="perfil-input forum-textarea" placeholder="Descreva sua dúvida com detalhes..." required maxlength="500"></textarea>
+      <button type="submit" class="btn-primario"><i class="fa-solid fa-paper-plane"></i> Publicar dúvida</button>
+    </form>
+
+    <div id="lista-topicos" class="forum-lista-topicos">
+      <!-- tópicos inseridos via JS -->
+    </div>
+  </main>
+</section>
+
+<!-- ===================== TELA: PONTUAÇÃO (pontuacao.py) ===================== -->
+<section id="tela-pontuacao" class="tela">
+  <header class="topo-app">
+    <button class="btn-icone btn-voltar" data-voltar="menu" aria-label="Voltar ao menu"><i class="fa-solid fa-arrow-left"></i></button>
+    <h2 class="topo-titulo-pagina"><i class="fa-solid fa-medal"></i> Minha Pontuação</h2>
+  </header>
+
+  <main class="pontuacao-container">
+    <div class="pontuacao-cards">
+      <article class="pontuacao-card">
+        <i class="fa-solid fa-book-open"></i>
+        <p class="pontuacao-meta-label">Pontos em Conteúdo</p>
+        <p class="pontuacao-valor"><span id="pt-pontos-atual">0</span> / 100</p>
+        <div class="barra-progresso"><div class="barra-progresso-fill" id="barra-pontos"></div></div>
+      </article>
+      <article class="pontuacao-card">
+        <i class="fa-solid fa-comments"></i>
+        <p class="pontuacao-meta-label">Respostas no Fórum</p>
+        <p class="pontuacao-valor"><span id="pt-forum-atual">0</span> / 2</p>
+        <div class="barra-progresso"><div class="barra-progresso-fill" id="barra-forum"></div></div>
+      </article>
+      <article class="pontuacao-card">
+        <i class="fa-solid fa-hourglass-half"></i>
+        <p class="pontuacao-meta-label">Minutos de Shorts</p>
+        <p class="pontuacao-valor"><span id="pt-shorts-atual">0</span> / 10</p>
+        <div class="barra-progresso"><div class="barra-progresso-fill" id="barra-shorts"></div></div>
+      </article>
+      <article class="pontuacao-card">
+        <i class="fa-solid fa-heart"></i>
+        <p class="pontuacao-meta-label">Curtidas dadas</p>
+        <p class="pontuacao-valor"><span id="pt-curtidas-atual">0</span></p>
+      </article>
+    </div>
+
+    <div id="resultado-final" class="resultado-final oculto">
+      <div id="resultado-conteudo"></div>
+    </div>
+
+    <button id="btn-verificar-pontuacao" class="btn-primario btn-verificar">
+      <i class="fa-solid fa-clipboard-check"></i> Verificar Aprovação
+    </button>
+  </main>
+</section>
+
+<!-- Áudio do menu (menu.py / assets/sons) -->
+<audio id="som-menu" src="sounds/menu.ogg" preload="auto"></audio>
+<audio id="som-acerto" src="sounds/menu.ogg" preload="auto"></audio>
+
+<!-- Toast de notificação -->
+<div id="toast" class="toast"></div>
+
+<!-- ===================== SCRIPTS (equivalentes aos módulos .py) ===================== -->
+<script src="js/dados.js"></script>
+<script src="js/estatistica_visita.js"></script>
+<script src="js/relogio.js"></script>
+<script src="js/calendario.js"></script>
+<script src="js/perfil.js"></script>
+<script src="js/preencha_lacunas.js"></script>
+<script src="js/descubra_combinacoes.js"></script>
+<script src="js/pontuacao.js"></script>
+<script src="js/conteudo.js"></script>
+<script src="js/shorts.js"></script>
+<script src="js/forum.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
